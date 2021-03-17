@@ -7,7 +7,7 @@ import requests
 
 
 class Block:
-    def __init__(self, index, transactions, timestamp, previous_hash, nonce=0):
+    def __init__(self, index, transactions,  timestamp, previous_hash, nonce=0):
         self.index = index
         self.transactions = transactions
         self.timestamp = timestamp
