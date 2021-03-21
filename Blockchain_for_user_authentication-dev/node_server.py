@@ -235,5 +235,10 @@ def user_present():
         for transactions in block["transactions"]:
             if transactions["username"] == ans:
                 print("Sent to end device for verification")
-                return json.dumps({"Is_Present": "Yes"})
+                CONNECTED_Server_ADDRESS = "http://127.0.0.1:5000"
+                for_verification = "{}/verify".format(CONNECTED_Server_ADDRESS)
+                response = requests.get(for_verification)
+                ans = json.loads(response.content)
+                print (ans)
+                return json.dumps({"Is_Present": ans})
     return json.dumps({"Is_Present": "No"})
