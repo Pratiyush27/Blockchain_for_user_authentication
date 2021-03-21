@@ -111,6 +111,7 @@ def register_with_existing_node():
         return response.content, response.status_code
 
 
+
 def create_chain_from_dump(chain_dump):
     generated_blockchain = Blockchain()
     generated_blockchain.create_genesis_block()
@@ -196,3 +197,43 @@ def announce_new_block(block):
 
 # Uncomment this line if you want to specify the port number in the code
 #app.run(debug=True, port=8000)
+
+@app.route('/register_user', methods=['POST'])
+def register_with_user():
+    """
+    Internally calls the `register_node` endpoint to
+    register current node with the node specified in the
+    request, and sync the blockchain as well as peer data.
+    """
+#    chain = get_chain()
+#    for block in chain["chain"]:
+#        for tx in block["transactions"]:
+#            if block['username'] == request.get_json()["username"]
+#                return
+    post_object = {
+        'username': request.get_json()["username"],
+        'enddevice': request.get_json()["enddevice"],
+    }
+    
+    post_object["timestamp"] = time.time()
+    blockchain.add_new_transaction(post_object)
+    return "Block added to the chain", 201
+
+@app.route('/is_present', methods=['GET'])
+def user_present():
+    """
+    Internally calls the `register_node` endpoint to
+    register current node with the node specified in the
+    request, and sync the blockchain as well as peer data.
+    """
+    chain_data = []
+    for block in blockchain.chain:
+        chain_data.append(block.__dict__)
+#    print(chain_data)
+    ans = request.get_json()["username"]
+    for block in chain_data:
+        for transactions in block["transactions"]:
+            if transactions["username"] == ans:
+                print("Sent to end device for verification")
+                return json.dumps({"Is_Present": "Yes"})
+    return json.dumps({"Is_Present": "No"})
