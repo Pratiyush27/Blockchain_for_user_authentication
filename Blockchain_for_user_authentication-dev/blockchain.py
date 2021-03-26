@@ -63,6 +63,15 @@ class Blockchain:
         return computed_hash
 
     def add_new_transaction(self, transaction):
+        chain_data = []
+        for block in self.chain:
+            chain_data.append(block.__dict__)
+        #    print(chain_data)
+        ans = transaction["username"]
+        for block in chain_data:
+            for transactions in block["transactions"]:
+                if transactions["username"] == ans:
+                    return 
         self.unconfirmed_transactions.append(transaction)
 
     @classmethod
